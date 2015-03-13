@@ -16,7 +16,7 @@
 
 | Part | Description | Farnell # | Quantity Required | Notes
 | ---  | ---         | ---       | ---               | ---
-|CRG0402F1K0|TE CONNECTIVITY - RESISTOR, FIXED, 1K0, 1%, 0402|[2331474](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=2331474)|2|R1 R2 R3 R4 LEDs, pull
+|CRG0402F1K0|TE CONNECTIVITY - RESISTOR, FIXED, 1K0, 1%, 0402|[2331474](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=2331474)|4|R1 R2 R3 R4 LEDs, pull
 |MCFT000004|MULTICOMP - INDUCTOR, 0402, 4.7NH|[1711709](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711709)|1|L1
 |MCFT000007|MULTICOMP - INDUCTOR, 0402, 10NH|[1711712](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711712)|1|L2
 |MCFT000003|MULTICOMP - INDUCTOR, 0402, 3.3NH|[1711708](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711708)|1|L3
@@ -35,5 +35,5 @@
 
 | Part | Description | Farnell # | Quantity Required | Notes
 | ---  | ---         | ---       | ---               | ---
-|20021121-00010C4LF|FCI - CONNECTOR, HEADER, SMT, R/A, 1.27MM, 10P|[1865279](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1865279)|1|JTAG1
+|20021121-00010C4LF|FCI - CONNECTOR, HEADER, SMT, R/A, 1.27MM, 10P|[1865279](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1865279) [649-202112100010C4LF](http://uk.mouser.com/Search/Refine.aspx?N=1323043&Keyword=649-202112100010C4LF)|1|JTAG1
 |USB3065-30-00-A|GLOBAL CONNECTOR TECHNOLOGY - CONN, USB 2.0 MICRO B, RCPT, 5POS, SMT|[2443111](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=2443111)|1|X1 µUSB
