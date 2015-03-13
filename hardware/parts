@@ -1,0 +1,39 @@
+# Parts List
+
+---
+
+## Actives
+
+| Part | Description | Farnell # | Quantity Required | Notes
+| ---  | ---         | ---       | ---               | ---
+262-BMP180 1 Pressure Sensor
+949-NRF51822-QFAA-R7    1       IC3
+1815750 595-TLV70033DCKT 1 IC4 DCK package = SC70
+1628222 700-MAX1555EZK+T 1 IC5
+1842186 717-8Z-16.000MAAJ-T 1 Y1 Xtal
+
+## Passives
+
+| Part | Description | Farnell # | Quantity Required | Notes
+| ---  | ---         | ---       | ---               | ---
+2331474 2 R1 R2 R3 R4 LEDs, pull
+1711709 1 L1
+1711712 1 L2
+1711708 1 L3
+2456103 1 C1
+1759380 3 C2 C10 C13
+2320767 1 C3
+2218842 1 C4
+2434609 1 C5
+1828869 2 C6 C7
+1759375 1 C8
+2362092 1 C9
+1758943 2 C11 C12
+2309013 3 C14 C15 C16
+
+## Misc
+
+| Part | Description | Farnell # | Quantity Required | Notes
+| ---  | ---         | ---       | ---               | ---
+1865279 1       JTAG1
+2443111 1 X1 µUSB
