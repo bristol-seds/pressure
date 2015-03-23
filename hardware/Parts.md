@@ -20,6 +20,8 @@
 |MCFT000004|MULTICOMP - INDUCTOR, 0402, 4.7NH|[1711709](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711709)|1|L1
 |MCFT000007|MULTICOMP - INDUCTOR, 0402, 10NH|[1711712](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711712)|1|L2
 |MCFT000003|MULTICOMP - INDUCTOR, 0402, 3.3NH|[1711708](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711708)|1|L3
+|MLZ1608M100WT|TDK - INDUCTOR, SHIELDED, 10UH, 20%|[2215635](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=2215635)|1|L4 10µH
+|MCFT000008|MULTICOMP - INDUCTOR, 0402, 15NH|[1711713](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1711713)|1|L5
 |GRM155R71A473KA01D|MURATA - CAPACITOR, MLCC, X7R, 0.047UF, 10V, 0402|[2456103](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=2456103)|1|C1
 |MC0402X104K100CT|MULTICOMP - CAP, MLCC, X5R, 100NF, 10V, 0402|[1759380](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=1759380)|3|C2 C10 C13
 |MC0402B222J500CT|MULTICOMP - CAP, MLCC, X7R, 2.2NF, 50V, 0402|[2320767](http://uk.farnell.com/webapp/wcs/stores/servlet/Search?st=2320767)|1|C3
