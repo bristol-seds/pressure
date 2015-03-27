@@ -1,0 +1,13 @@
+# Backup files
+*~
+#*#
+
+# gdbscript
+gdbscript
+gdbscript-custom
+
+# The output directory
+out/
+
+# tags
+TAGS
