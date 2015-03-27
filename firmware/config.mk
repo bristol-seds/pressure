@@ -24,7 +24,7 @@
 #
 # This is used to define the name of the build artifact
 #
-PROJECT_NAME		:= simple_test
+PROJECT_NAME		:= ble_app_hrs
 
 # The exact chip being built for.
 #
@@ -56,7 +56,7 @@ LINKER_FLAGS		:= -Wl,--gc-sections
 # Can be s110, s120, s210 or s310. Leave blank if no softdevice is
 # being used.
 #
-USE_SOFTDEVICE		:=
+USE_SOFTDEVICE		:= s110
 
 # The path to a specific blackmagic debugger to use. Optional
 #
@@ -79,17 +79,45 @@ BOARD			:= BOARD_PCA10001
 # Folders from the SDK Include Directory. Copy this from the example
 # makefiles in the SDK
 #
-INCLUDEPATHS	+=
+INCLUDEPATHS	+= s110
+INCLUDEPATHS	+= ble
+INCLUDEPATHS	+= ble/device_manager
+INCLUDEPATHS	+= ble/ble_services
+INCLUDEPATHS	+= app_common
+INCLUDEPATHS	+= sd_common
+INCLUDEPATHS	+= sdk
 
 # C_SOURCE_FILES
 #
 # Add source files from the SDK here. You can copy this directly from
 # example makefiles in the SDK.
 #
-C_SOURCE_FILES +=
+C_SOURCE_FILES += ble_dis.c
+C_SOURCE_FILES += ble_bas.c
+C_SOURCE_FILES += ble_hrs.c
+
+C_SOURCE_FILES += ble_srv_common.c
+C_SOURCE_FILES += ble_sensorsim.c
+C_SOURCE_FILES += softdevice_handler.c
+C_SOURCE_FILES += ble_advdata.c
+C_SOURCE_FILES += ble_debug_assert_handler.c
+C_SOURCE_FILES += ble_error_log.c
+C_SOURCE_FILES += ble_conn_params.c
+C_SOURCE_FILES += app_timer.c
+C_SOURCE_FILES += pstorage.c
+C_SOURCE_FILES += crc16.c
+C_SOURCE_FILES += device_manager_peripheral.c
+C_SOURCE_FILES += app_trace.c
+C_SOURCE_FILES += simple_uart.c
+C_SOURCE_FILES += app_gpiote.c
+C_SOURCE_FILES += app_button.c
+
 #
 # Directories in the SDK Source Directory where the above
 # C_SOURCE_FILES can be found. Copy this from the example makefiles in
 # the SDK.
 #
-C_SOURCE_PATHS	+=
+C_SOURCE_PATHS	+= ble
+C_SOURCE_PATHS  += ble/device_manager
+C_SOURCE_PATHS	+= app_common
+C_SOURCE_PATHS	+= sd_common
