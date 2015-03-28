@@ -49,8 +49,8 @@ typedef enum {
 /**
  * The mode of pressure measurement
  */
-#define PRESSURE_MODE		PRESSURE_STANDARD
-#define PRESSURE_DELAY		7500
+#define PRESSURE_MODE		PRESSURE_HIGHRES// PRESSURE_STANDARD
+#define PRESSURE_DELAY		13500//7500
 
 #define TEMPERATURE_DELAY	4500
 
@@ -87,7 +87,7 @@ uint8_t oversampling(void) {
  * Implements a microsecond delay
  */
 void delay_us(uint16_t microseconds) {
-  int32_t i = microseconds * 160;
+  int32_t i = microseconds * 16;
 
   while(i--);
 }
