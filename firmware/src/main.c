@@ -12,9 +12,9 @@
 
 /** @file
  *
- * @defgroup ble_sdk_app_hrs_eval_main main.c
+ * @defgroup ble_sdk_app_ess_eval_main main.c
  * @{
- * @ingroup ble_sdk_app_hrs_eval
+ * @ingroup ble_sdk_app_ess_eval
  * @brief Main file for Heart Rate Service Sample Application for nRF51822 evaluation board
  *
  * This file contains the source code for a sample application using the Heart Rate service
@@ -32,7 +32,7 @@
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
 #include "ble_bas.h"
-#include "ble_hrs.h"
+#include "ble_ess.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
 #include "boards.h"
@@ -101,7 +101,7 @@
 
 static ble_gap_adv_params_t                  m_adv_params;                              /**< Parameters to be passed to the stack when starting advertising. */
 ble_bas_t                                    bas;                                       /**< Structure used to identify the battery service. */
-static ble_hrs_t                             m_hrs;                                     /**< Structure used to identify the heart rate service. */
+static ble_ess_t                             m_ess;                                     /**< Structure used to identify the heart rate service. */
 static volatile uint16_t                     m_cur_heart_rate;                          /**< Current heart rate value. */
 
 static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
@@ -207,7 +207,24 @@ static void heart_rate_meas_timeout_handler(void * p_context)
 
   UNUSED_PARAMETER(p_context);
 
-  err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, m_cur_heart_rate);
+  struct barometer* b_ptr = get_barometer();
+
+  err_code = ble_ess_pressure_send(&m_ess, b_ptr->pressure * 10); // Units 0.1Pa
+
+  if (
+    (err_code != NRF_SUCCESS)
+    &&
+    (err_code != NRF_ERROR_INVALID_STATE)
+    &&
+    (err_code != BLE_ERROR_NO_TX_BUFFERS)
+    &&
+    (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
+    )
+  {
+    APP_ERROR_HANDLER(err_code);
+  }
+
+  err_code = ble_ess_temperature_send(&m_ess, (uint16_t)(b_ptr->temperature * 100)); // Units 0.01°C
 
   if (
     (err_code != NRF_SUCCESS)
@@ -306,7 +323,7 @@ static void gap_params_init(void)
                                         strlen(DEVICE_NAME));
   APP_ERROR_CHECK(err_code);
 
-  err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT);
+  err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_UNKNOWN);
   APP_ERROR_CHECK(err_code);
 
   memset(&gap_conn_params, 0, sizeof(gap_conn_params));
@@ -370,28 +387,29 @@ static void advertising_init(void)
 static void services_init(void)
 {
   uint32_t       err_code;
-  ble_hrs_init_t hrs_init;
+  ble_ess_init_t ess_init;
   ble_bas_init_t bas_init;
   ble_dis_init_t dis_init;
   uint8_t        body_sensor_location;
 
   // Initialize Heart Rate Service.
-  body_sensor_location = BLE_HRS_BODY_SENSOR_LOCATION_FINGER;
+  body_sensor_location = BLE_ESS_BODY_SENSOR_LOCATION_FINGER;
 
-  memset(&hrs_init, 0, sizeof(hrs_init));
+  memset(&ess_init, 0, sizeof(ess_init));
 
-  hrs_init.is_sensor_contact_supported = false;
-  hrs_init.p_body_sensor_location      = &body_sensor_location;
+  ess_init.is_sensor_contact_supported = false;
+  ess_init.p_body_sensor_location      = &body_sensor_location;
 
   // Here the sec level for the Heart Rate Service can be changed/increased.
-  BLE_GAP_CONN_SEC_MODE_SET_OPEN(&hrs_init.hrs_hrm_attr_md.cccd_write_perm);
-  BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&hrs_init.hrs_hrm_attr_md.read_perm);
-  BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&hrs_init.hrs_hrm_attr_md.write_perm);
+  BLE_GAP_CONN_SEC_MODE_SET_OPEN(&ess_init.ess_pc_attr_md.cccd_write_perm);
+  BLE_GAP_CONN_SEC_MODE_SET_OPEN(&ess_init.ess_pc_attr_md.read_perm);
+  BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&ess_init.ess_pc_attr_md.write_perm);
 
-  BLE_GAP_CONN_SEC_MODE_SET_OPEN(&hrs_init.hrs_bsl_attr_md.read_perm);
-  BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&hrs_init.hrs_bsl_attr_md.write_perm);
+  BLE_GAP_CONN_SEC_MODE_SET_OPEN(&ess_init.ess_tc_attr_md.cccd_write_perm);
+  BLE_GAP_CONN_SEC_MODE_SET_OPEN(&ess_init.ess_tc_attr_md.read_perm);
+  BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&ess_init.ess_tc_attr_md.write_perm);
 
-  err_code = ble_hrs_init(&m_hrs, &hrs_init);
+  err_code = ble_ess_init(&m_ess, &ess_init);
   APP_ERROR_CHECK(err_code);
 
   // Initialize Battery Service.
@@ -440,7 +458,7 @@ static void conn_params_init(void)
   cp_init.first_conn_params_update_delay = FIRST_CONN_PARAMS_UPDATE_DELAY;
   cp_init.next_conn_params_update_delay  = NEXT_CONN_PARAMS_UPDATE_DELAY;
   cp_init.max_conn_params_update_count   = MAX_CONN_PARAMS_UPDATE_COUNT;
-  cp_init.start_on_notify_cccd_handle    = m_hrs.hrm_handles.cccd_handle;
+  cp_init.start_on_notify_cccd_handle    = m_ess.pc_handles.cccd_handle;
   cp_init.disconnect_on_fail             = true;
   cp_init.evt_handler                    = NULL;
   cp_init.error_handler                  = conn_params_error_handler;
@@ -702,7 +720,7 @@ static void on_sys_evt(uint32_t sys_evt)
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
   dm_ble_evt_handler(p_ble_evt);
-  ble_hrs_on_ble_evt(&m_hrs, p_ble_evt);
+  ble_ess_on_ble_evt(&m_ess, p_ble_evt);
   ble_bas_on_ble_evt(&bas, p_ble_evt);
   ble_conn_params_on_ble_evt(p_ble_evt);
   on_ble_evt(p_ble_evt);
@@ -751,8 +769,6 @@ int main(void)
   // Configure sensor
   if (!twi_master_init()) while(1);
   bmp180_init();
-
-  struct barometer* b_ptr = get_barometer();
 
   // Enter main loop.
   for (;;)
